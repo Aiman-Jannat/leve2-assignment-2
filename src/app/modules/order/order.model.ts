@@ -3,10 +3,22 @@ import TOrder from './order.interface';
 import { Product } from '../product/product.model';
 
 const orderSchema = new Schema<TOrder>({
-    email: { type: String, required: true },
-    productId: { type: String, required: true},
-    price: { type: Number, required: true },
-    quantity: { type: Number, required: true }
+    email: {
+        type: String,
+        required: [true, "Email is required"]
+      },
+      productId: {
+        type: String,
+        required: [true, "Product ID is required"]
+      },
+      price: {
+        type: Number,
+        required: [true, "Price is required"]
+      },
+      quantity: {
+        type: Number,
+        required: [true, "Quantity is required"]
+      }
 });
 
 orderSchema.pre<TOrder | undefined>('save',async function(next){
@@ -20,7 +32,7 @@ orderSchema.pre<TOrder | undefined>('save',async function(next){
     const diff = existingProduct.inventory.quantity - order.quantity;
 
         if (diff < 0) {
-            throw new Error('Product quantity not sufficient');
+            throw new Error('Insufficient quantity available in inventory');
         }
         existingProduct.inventory.quantity -= order.quantity;
         if (existingProduct.inventory.quantity === 0) {

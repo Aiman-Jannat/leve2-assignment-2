@@ -2,8 +2,13 @@ import { TProduct } from "./product.interface";
 import { Product } from "./product.model";
 
 const createProductIntoDB = async (productData: TProduct) => {
-  const product = await Product.create(productData);
+  try{
+    const product = await Product.create(productData);
   return product;
+  }
+  catch(error:any){
+throw new Error(error.message)  }
+  
 };
 
 const getAllProductsDataFromDB = async () => {
