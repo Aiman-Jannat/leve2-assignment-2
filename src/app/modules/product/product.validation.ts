@@ -1,15 +1,15 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 // Define Joi schema for TVariant
 const VariantValidation = Joi.object({
   type: Joi.string().required(),
-  value: Joi.string().required()
+  value: Joi.string().required(),
 });
 
 // Define Joi schema for TInventory
 const InventoryValidation = Joi.object({
   quantity: Joi.number().required(),
-  inStock: Joi.boolean().required()
+  inStock: Joi.boolean().required(),
 });
 
 // Define Joi schema for TProduct
@@ -20,7 +20,7 @@ const ProductValidation = Joi.object({
   category: Joi.string().required(),
   tags: Joi.array().items(Joi.string()),
   variants: Joi.array().items(VariantValidation).required(),
-  inventory: InventoryValidation.required()
+  inventory: InventoryValidation.required(),
 });
 
 export default ProductValidation;
